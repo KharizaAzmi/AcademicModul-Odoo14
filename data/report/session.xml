@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Report Definition -->
+        <report
+            id="report_session_menu"
+            string="Session Report"
+            model="academic.session"
+            report_type="qweb-pdf"
+            file="academic.session_report"
+            name="academic.session_report"
+        />
+
+        <!-- Main Report Template -->
+        <template id="session_report">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="academic.session_report_document"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- Document Template -->
+        <template id="academic.session_report_document">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>SESSION: <span t-field="doc.name"/></h2>
+                    <table class="table table-condensed">
+                        <tr>
+                            <td>Course</td>
+                            <td><span t-field="doc.course_id.name"/></td>
+                            <td>Duration</td>
+                            <td><span t-field="doc.duration"/></td>
+                        </tr>
+                        <tr>
+                            <td>Instructor</td>
+                            <td><span t-field="doc.instructor_id.name"/></td>
+                            <td>Seat</td>
+                            <td><span t-field="doc.seats"/></td>
+                        </tr>
+                        <tr>
+                            <td>Start Date</td>
+                            <td><span t-field="doc.start_date"/></td>
+                            <td>Taken Seats</td>
+                            <td><span t-field="doc.taken_seats"/></td>
+                        </tr>
+                    </table>
+                    <h3>Attendees</h3>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Reg Number</th>
+                                <th>Partner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.attendee_ids" t-as="att">
+                                <td><span t-field="att.name"/></td>
+                                <td><span t-field="att.partner_id.name"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <record id="attendee_wizard_form" model="ir.ui.view">
+            <field name="name">attendee_wizard_form</field>
+            <field name="model">academic.attendee.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Attendee Wizard">
+                    <sheet>
+                        <group>
+                            <field name="session_id"/>
+                            <field name="attendee_ids">
+                                <tree editable="bottom">
+                                    <field name="partner_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_add_attendee" type="object" string="Confirm" confirm="Anda yakin?"/>
+                        <button type="special" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="create_attendee_wizard_action" model="ir.actions.act_window">
+            <field name="name">Add Attendee</field>
+            <field name="res_model">academic.attendee.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="attendee_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="create_attendee_wizard_menu"
+            name="Create Attendee"
+            parent="academic_0"
+            action="create_attendee_wizard_action"
+            sequence="50"/>
+    </data>
+</odoo>
